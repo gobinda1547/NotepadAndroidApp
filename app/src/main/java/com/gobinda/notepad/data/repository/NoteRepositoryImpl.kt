@@ -1,5 +1,6 @@
 package com.gobinda.notepad.data.repository
 
+import com.gobinda.notepad.common.NoteRepository
 import com.gobinda.notepad.data.model.NoteModel
 import com.gobinda.notepad.data.source.NoteDao
 import kotlinx.coroutines.flow.Flow
