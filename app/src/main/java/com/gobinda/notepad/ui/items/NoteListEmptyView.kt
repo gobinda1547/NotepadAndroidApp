@@ -1,5 +1,6 @@
 package com.gobinda.notepad.ui.items
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -11,12 +12,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun NoteListEmptyView() {
+fun NoteListEmptyView(onTextClicked: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         Text(
+            modifier = Modifier.clickable {
+                onTextClicked.invoke()
+            },
             text = "Click to add new note",
             fontSize = 18.sp,
             fontFamily = FontFamily.SansSerif,
