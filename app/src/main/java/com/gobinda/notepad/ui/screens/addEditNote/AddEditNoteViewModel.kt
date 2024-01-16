@@ -36,16 +36,19 @@ class AddEditNoteViewModel @Inject constructor(
     private val _shouldCloseScreen = MutableSharedFlow<Boolean?>()
     val shouldCloseScreen: SharedFlow<Boolean?> = _shouldCloseScreen
 
-    private val _previousNoteId = MutableStateFlow<Long?>(null)
+    private var relatedNoteId: Long = -1L
+
+    private val _isEditingNote = MutableStateFlow<Boolean?>(null)
+    val isEditingNote: StateFlow<Boolean?> = _isEditingNote
 
     init {
         viewModelScope.launch {
-            val noteId = savedState.get<Long>(AddOrEditNoteScreen.noteIdArg) ?: return@launch
-            if (noteId == -1L) return@launch // -1 for add note screen
-            getSingleNoteUseCase.execute(noteId).firstOrNull()?.let {
+            relatedNoteId = savedState.get<Long>(AddOrEditNoteScreen.noteIdArg) ?: -1L
+            _isEditingNote.emit(relatedNoteId != -1L)
+            if (relatedNoteId == -1L) return@launch // -1 for add note screen
+            getSingleNoteUseCase.execute(relatedNoteId).firstOrNull()?.let {
                 _titleText.emit(it.title)
                 _contentText.emit(it.content)
-                _previousNoteId.emit(it.id)
             }
         }
     }
@@ -66,7 +69,7 @@ class AddEditNoteViewModel @Inject constructor(
                         title = titleText.value,
                         content = contentText.value,
                         lastEditTime = System.currentTimeMillis(),
-                        id = _previousNoteId.value ?: 0L
+                        id = if (relatedNoteId == -1L) 0L else relatedNoteId
                     )
                     addNoteUseCase.execute(currentNote)
                     _shouldCloseScreen.emit(true)

@@ -36,6 +36,7 @@ fun AddEditNoteScreen(
     val context = LocalContext.current
     val titleTextState = viewModel.titleText.collectAsState()
     val contentTextState = viewModel.contentText.collectAsState()
+    val isEditingNoteState = viewModel.isEditingNote.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.toastMessage.collect {
@@ -62,7 +63,9 @@ fun AddEditNoteScreen(
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
                 title = {
-                    Text(text = "Add or Edit")
+                    isEditingNoteState.value?.let { isEdit ->
+                        Text(text = if (isEdit) "Edit" else "Add")
+                    }
                 },
                 actions = {
                     IconButton(onClick = { viewModel.handleEvent(AddEditUiEvent.SaveNote) }) {
