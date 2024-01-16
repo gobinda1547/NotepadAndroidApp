@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.gobinda.notepad.ui.items.ContentInputView
+import com.gobinda.notepad.ui.items.MenuDivider
 import com.gobinda.notepad.ui.items.TitleInputView
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,6 +96,7 @@ fun AddEditNoteScreen(
             TitleInputView(text = titleTextState.value) {
                 viewModel.handleEvent(AddEditUiEvent.UpdateTitle(it))
             }
+            MenuDivider(paddingStart = 16, paddingEnd = 16)
             ContentInputView(text = contentTextState.value) {
                 viewModel.handleEvent(AddEditUiEvent.UpdateContent(it))
             }

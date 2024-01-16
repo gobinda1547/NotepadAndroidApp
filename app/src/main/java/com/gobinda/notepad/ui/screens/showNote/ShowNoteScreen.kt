@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.gobinda.notepad.ui.items.MenuDivider
 import com.gobinda.notepad.ui.navigation.AddOrEditNoteScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,6 +88,7 @@ fun ShowNoteScreen(
                     fontStyle = FontStyle.Normal,
                     fontWeight = FontWeight.Light,
                 )
+                MenuDivider(paddingStart = 16, paddingEnd = 16)
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
