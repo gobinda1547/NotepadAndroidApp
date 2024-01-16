@@ -36,7 +36,7 @@ fun ContentInputView(
             textStyle = TextStyle(
                 color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = FontFamily.SansSerif,
-                fontSize = 22.sp,
+                fontSize = 20.sp,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Light
             ),
@@ -49,7 +49,7 @@ fun ContentInputView(
                 text = hintText,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontFamily = FontFamily.SansSerif,
-                fontSize = 22.sp,
+                fontSize = 20.sp,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Light,
             )

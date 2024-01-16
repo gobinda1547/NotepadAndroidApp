@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TitleInputView(
     text: String,
-    hintText: String = "Title",
+    hintText: String = "Title..",
     onValueChanged: (String) -> Unit
 ) {
     Box(
@@ -38,7 +38,7 @@ fun TitleInputView(
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 24.sp,
                 fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Light,
             ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             singleLine = false,
@@ -51,7 +51,7 @@ fun TitleInputView(
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 24.sp,
                 fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Light,
             )
         }
     }

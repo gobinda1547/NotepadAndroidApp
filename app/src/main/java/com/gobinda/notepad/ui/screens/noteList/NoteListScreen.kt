@@ -1,6 +1,5 @@
 package com.gobinda.notepad.ui.screens.noteList
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,9 +23,8 @@ import androidx.navigation.NavController
 import com.gobinda.notepad.domain.model.NoteAsListItem
 import com.gobinda.notepad.ui.items.ActualNoteListView
 import com.gobinda.notepad.ui.items.NoteListEmptyView
-import com.gobinda.notepad.ui.navigation.AppScreen
-
-private const val TAG = "NoteListScreen"
+import com.gobinda.notepad.ui.navigation.AddOrEditNoteScreen
+import com.gobinda.notepad.ui.navigation.ShowNoteScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +44,11 @@ fun NoteListScreen(
                 title = { Text(text = "Notepad") },
                 actions = {
                     IconButton(
-                        onClick = { navController.navigate(AppScreen.AddOrEditNoteScreen.route) }
+                        onClick = {
+                            val inputMap = mapOf(AddOrEditNoteScreen.noteIdArg to -1L)
+                            val currentRoute = AddOrEditNoteScreen.outputRoute(inputMap)
+                            navController.navigate(currentRoute)
+                        }
                     ) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
@@ -63,11 +65,15 @@ fun NoteListScreen(
             noteItems.value?.let { validItems ->
                 when (validItems.isEmpty()) {
                     true -> NoteListEmptyView {
-                        navController.navigate(AppScreen.AddOrEditNoteScreen.route)
+                        val inputMap = mapOf(AddOrEditNoteScreen.noteIdArg to -1L)
+                        val currentRoute = AddOrEditNoteScreen.outputRoute(inputMap)
+                        navController.navigate(currentRoute)
                     }
 
                     else -> ActualNoteListView(noteItems = validItems) {
-                        Log.d(TAG, "NoteListScreen: onItemClicked = $it")
+                        val inputMap = mapOf(ShowNoteScreen.noteIdArg to it)
+                        val currentRoute = ShowNoteScreen.outputRoute(inputMap)
+                        navController.navigate(currentRoute)
                     }
                 }
             }
