@@ -1,26 +1,27 @@
 package com.gobinda.notepad.ui.screens.addEditNote
 
-import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gobinda.notepad.domain.model.Note
 import com.gobinda.notepad.domain.usecase.AddNoteException
 import com.gobinda.notepad.domain.usecase.AddNoteUseCase
 import com.gobinda.notepad.domain.usecase.GetSingleNoteUseCase
+import com.gobinda.notepad.ui.navigation.AddOrEditNoteScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val TAG = "AddEditNoteViewModel"
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     getSingleNoteUseCase: GetSingleNoteUseCase,
-    private val addNoteUseCase: AddNoteUseCase
+    private val addNoteUseCase: AddNoteUseCase,
+    private val savedState: SavedStateHandle
 ) : ViewModel() {
 
     private val _titleText = MutableStateFlow("")
@@ -34,6 +35,20 @@ class AddEditNoteViewModel @Inject constructor(
 
     private val _shouldCloseScreen = MutableSharedFlow<Boolean?>()
     val shouldCloseScreen: SharedFlow<Boolean?> = _shouldCloseScreen
+
+    private val _previousNoteId = MutableStateFlow<Long?>(null)
+
+    init {
+        viewModelScope.launch {
+            val noteId = savedState.get<Long>(AddOrEditNoteScreen.noteIdArg) ?: return@launch
+            if (noteId == -1L) return@launch // -1 for add note screen
+            getSingleNoteUseCase.execute(noteId).firstOrNull()?.let {
+                _titleText.emit(it.title)
+                _contentText.emit(it.content)
+                _previousNoteId.emit(it.id)
+            }
+        }
+    }
 
     fun handleEvent(event: AddEditUiEvent) = viewModelScope.launch {
         when (event) {
@@ -50,12 +65,12 @@ class AddEditNoteViewModel @Inject constructor(
                     val currentNote = Note(
                         title = titleText.value,
                         content = contentText.value,
-                        lastEditTime = System.currentTimeMillis()
+                        lastEditTime = System.currentTimeMillis(),
+                        id = _previousNoteId.value ?: 0L
                     )
                     addNoteUseCase.execute(currentNote)
                     _shouldCloseScreen.emit(true)
                 } catch (exception: AddNoteException) {
-                    Log.d(TAG, "handleEvent: invoking error ========= $exception")
                     _toastMessage.emit(exception.reason)
                 }
             }
