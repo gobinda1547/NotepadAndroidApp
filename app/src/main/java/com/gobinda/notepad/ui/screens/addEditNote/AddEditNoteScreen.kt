@@ -4,7 +4,10 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
@@ -37,6 +40,7 @@ fun AddEditNoteScreen(
     val titleTextState = viewModel.titleText.collectAsState()
     val contentTextState = viewModel.contentText.collectAsState()
     val isEditingNoteState = viewModel.isEditingNote.collectAsState()
+    val verticalScrollState = rememberScrollState()
 
     LaunchedEffect(Unit) {
         viewModel.toastMessage.collect {
@@ -84,6 +88,8 @@ fun AddEditNoteScreen(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
                 .fillMaxSize()
+                .imePadding()
+                .verticalScroll(state = verticalScrollState)
                 .padding(innerPadding),
         ) {
             TitleInputView(text = titleTextState.value) {
