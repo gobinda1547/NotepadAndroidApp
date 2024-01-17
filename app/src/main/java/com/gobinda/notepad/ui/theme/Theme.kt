@@ -11,6 +11,7 @@ import androidx.core.view.WindowCompat
 
 private val SingleColorScheme = lightColorScheme(
     primary = appTextColor100,
+    onPrimary = appBackgroundColor100,
     background = appBackgroundColor100,
     onBackground = appTextColor100,
     surface = appBackgroundColor100,
