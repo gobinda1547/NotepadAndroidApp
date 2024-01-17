@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 class GetNotesUseCase(private val repository: NoteRepository) {
     fun execute(): Flow<List<NoteAsListItem>> {
         return repository.getAllNotes().map { notes ->
-            notes.sortedBy { it.lastEditTime }
+            notes.sortedByDescending { it.lastEditTime }
         }.map { noteModelList -> noteModelList.map { it.toNoteAsListItem() } }
     }
 }
