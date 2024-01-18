@@ -3,7 +3,6 @@ A complete Android Notepad Application project created by following clean archit
 
 
 ## Functional requirements
-
 - Create note
 - Edit note
 - Delete note
@@ -12,8 +11,11 @@ A complete Android Notepad Application project created by following clean archit
 
 
 ## Basic UI design
-
 ![Figma UI design for Notepad app](extra_resources/figma_notepad_screens.png)
+
+
+## App Architecture
+![Notepad App Architecture](extra_resources/notepad_app_architecture_design.png)
 
 
 ## Commits
