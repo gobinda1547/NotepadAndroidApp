@@ -2,6 +2,14 @@
 A complete Android Notepad Application project created by following clean architecture design pattern, Also with **Kotlin** + **MVVM** + **Hilt** + **Room database** + **Coroutine** + **Flow** + **Jetpack compose** + etc. Managed the **CI/CD** pipeline with GitHub Actions.
 
 
+## Contents
+- [Functional Requirements](#functional-requirements)
+- [UI Design](#ui-design)
+- [App Architecture](#app-architecture)
+- [Commits](#commits)
+- [How to get the APK](#how-to-get-the-apk)
+
+
 ## Functional requirements
 - Create note
 - Edit note
@@ -10,7 +18,7 @@ A complete Android Notepad Application project created by following clean archit
 - Show all the notes in a list (with last edited item in the top)
 
 
-## Basic UI design
+## UI design
 ![Figma UI design for Notepad app](extra_resources/figma_notepad_screens.png)
 
 
